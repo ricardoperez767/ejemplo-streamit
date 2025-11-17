@@ -52,20 +52,10 @@ st.write("""
 #Graficamos una tabla
 st.table(df.head())
 
-# ---------------------------------------
-# MODIFICACIÓN: de (1,2) a (1,3) + ancho 15
-# ---------------------------------------
-fig, ax = plt.subplots(1, 3, figsize=(15, 3))
 
-# ---------------------------------------
-# Gráfico 1: Histograma de edades
-# ---------------------------------------
+
 div = 10   # número de divisiones para los bins
 
-ax[0].hist(df["Age"], bins=div)
-ax[0].set_xlabel("Edad")
-ax[0].set_ylabel("Frecuencia")
-ax[0].set_title("Histograma de edades")
 
 # ---------------------------------------
 # Gráfico 3: Sobrevivientes agrupados por sexo
