@@ -79,8 +79,6 @@ fig, axs = plt.subplots(1, 2, figsize=(12, 3))
 # ---- Función para porcentajes ----
 def autopct_format(values):
     def inner(pct):
-        total = sum(values)
-        val = int(round(pct * total / 100.0))
         return f"{pct:.1f}%"
     return inner
 
@@ -93,12 +91,9 @@ axs[0].pie(
     labels=[f"Sobrevivientes ({surv_male})", f"No sobrevivientes ({non_male})"],
     colors=[colors[0], grey],
     startangle=90,
-    autopct=autopct_format(vals_m)   # ← MUESTRA PORCENTAJES
+    autopct=autopct_format(vals_m)
 )
 axs[0].set_title("Hombres — (%) de Sobrevivientes")
-
-# número grande en el centro del donut
-axs[0].text(0, 0, str(surv_male), ha="center", va="center", fontsize=16, fontweight="bold")
 
 # ===========================
 #         MUJERES
@@ -109,11 +104,9 @@ axs[1].pie(
     labels=[f"Sobrevivientes ({surv_female})", f"No sobrevivientes ({non_female})"],
     colors=[colors[1], grey],
     startangle=90,
-    autopct=autopct_format(vals_f)   # ← MUESTRA PORCENTAJES
+    autopct=autopct_format(vals_f)
 )
 axs[1].set_title("Mujeres — (%) de Sobrevivientes")
-
-axs[1].text(0, 0, str(surv_female), ha="center", va="center", fontsize=16, fontweight="bold")
 
 # Asegurar aspecto circular
 for ax in axs:
@@ -121,3 +114,4 @@ for ax in axs:
 
 # Mostrar en Streamlit
 st.pyplot(fig)
+
