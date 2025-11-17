@@ -69,40 +69,53 @@ surv_female = len(df[(df["Sex"] == "female") & (df["Survived"] == 1)])
 total_female = len(df[df["Sex"] == "female"])
 non_female = total_female - surv_female
 
-# Colores consistentes (masculino, femenino)
+# Colores consistentes
 colors = ["#4A90E2", "#BE1BC4"]
 grey = "#DDDDDD"
 
 # Figura con dos donuts lado a lado
 fig, axs = plt.subplots(1, 2, figsize=(12, 3))
 
-# Donut masculino
+# ---- Función para porcentajes ----
+def autopct_format(values):
+    def inner(pct):
+        total = sum(values)
+        val = int(round(pct * total / 100.0))
+        return f"{pct:.1f}%"
+    return inner
+
+# ===========================
+#         HOMBRES
+# ===========================
 vals_m = [surv_male, non_male]
-labels_m = [f"Sobrevivientes ({surv_male})", f"No sobrevivientes ({non_male})"]
 axs[0].pie(
     vals_m,
-    labels=labels_m,
+    labels=[f"Sobrevivientes ({surv_male})", f"No sobrevivientes ({non_male})"],
     colors=[colors[0], grey],
     startangle=90,
+    autopct=autopct_format(vals_m)   # ← MUESTRA PORCENTAJES
 )
-axs[0].set_title("Hombres — Sobrevivientes (cantidad)")
+axs[0].set_title("Hombres — (%) de Sobrevivientes")
+
 # número grande en el centro del donut
 axs[0].text(0, 0, str(surv_male), ha="center", va="center", fontsize=16, fontweight="bold")
 
-# Donut femenino
+# ===========================
+#         MUJERES
+# ===========================
 vals_f = [surv_female, non_female]
-labels_f = [f"Sobrevivientes ({surv_female})", f"No sobrevivientes ({non_female})"]
 axs[1].pie(
     vals_f,
-    labels=labels_f,
+    labels=[f"Sobrevivientes ({surv_female})", f"No sobrevivientes ({non_female})"],
     colors=[colors[1], grey],
     startangle=90,
-    
+    autopct=autopct_format(vals_f)   # ← MUESTRA PORCENTAJES
 )
-axs[1].set_title("Mujeres — Sobrevivientes (cantidad)")
+axs[1].set_title("Mujeres — (%) de Sobrevivientes")
+
 axs[1].text(0, 0, str(surv_female), ha="center", va="center", fontsize=16, fontweight="bold")
 
-# Asegurar aspecto igual para que los donuts sean circulares
+# Asegurar aspecto circular
 for ax in axs:
     ax.axis("equal")
 
