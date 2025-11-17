@@ -53,7 +53,7 @@ st.write("""
 st.table(df.head())
 
 
-
+fig, ax = plt.subplots(1, 3, figsize=(15, 3))
 div = 10   # número de divisiones para los bins
 
 
