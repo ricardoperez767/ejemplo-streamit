@@ -51,3 +51,18 @@ st.write("""
 """)
 #Graficamos una tabla
 st.table(df.head())
+
+# ---------------------------------------
+# Gráfico 2: Total hombres y mujeres
+# ---------------------------------------
+df_male = df[df["Sex"] == "male"]
+df_female = df[df["Sex"] == "female"]
+
+cant_male = len(df_male)
+cant_female = len(df_female)
+
+ax[1].bar(["Masculino", "Femenino"], [cant_male, cant_female], color="red")
+ax[1].set_xlabel("Sexo")
+ax[1].set_ylabel("Cantidad")
+ax[1].set_title("Distribución de hombres y mujeres")
+
