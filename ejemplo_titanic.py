@@ -58,7 +58,7 @@ st.write("""
 ## Gráfico de Sobrevivientes por Sexo
 """)
 
-# ====== Gráfico de anillo de sobrevivientes por sexo ======
+# ====== Gráfico de torta de sobrevivientes por sexo ======
 
 # Filtrar y contar desde el DataFrame
 surv_male = len(df[(df["Sex"] == "male") & (df["Survived"] == 1)])
