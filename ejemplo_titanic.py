@@ -53,26 +53,58 @@ st.write("""
 st.table(df.head())
 
 
-fig, ax = plt.subplots(1, 3, figsize=(15, 3))
-div = 10   # número de divisiones para los bins
+# Muestra un título y una descripción en la aplicación Streamlit.
+st.write("""
+## Gráfico de Sobrevivientes por Sexo
+""")
 
+# ====== Gráfico de anillo de sobrevivientes por sexo ======
 
-# ---------------------------------------
-# Gráfico 3: Sobrevivientes agrupados por sexo
-# ---------------------------------------
-sob_male = len(df[(df["Sex"] == "male") & (df["Survived"] == 1)])
-sob_female = len(df[(df["Sex"] == "female") & (df["Survived"] == 1)])
+# Filtrar y contar desde el DataFrame
+surv_male = len(df[(df["Sex"] == "male") & (df["Survived"] == 1)])
+total_male = len(df[df["Sex"] == "male"])
+non_male = total_male - surv_male
 
-ax[2].bar(["Masculino", "Femenino"], [sob_male, sob_female], color="navy")
-ax[2].set_xlabel("Sexo")
-ax[2].set_ylabel("Cantidad Sobrevivientes")
-ax[2].set_title("Sobrevivientes por Sexo")
+surv_female = len(df[(df["Sex"] == "female") & (df["Survived"] == 1)])
+total_female = len(df[df["Sex"] == "female"])
+non_female = total_female - surv_female
 
-# Mostrar gráfico
+# Colores consistentes (masculino, femenino)
+colors = ["#4A90E2", "#BE1BC4"]
+grey = "#DDDDDD"
+
+# Figura con dos donuts lado a lado
+fig, axs = plt.subplots(1, 2, figsize=(12, 3))
+
+# Donut masculino
+vals_m = [surv_male, non_male]
+labels_m = [f"Sobrevivientes ({surv_male})", f"No sobrevivientes ({non_male})"]
+axs[0].pie(
+    vals_m,
+    labels=labels_m,
+    colors=[colors[0], grey],
+    startangle=90,
+)
+axs[0].set_title("Hombres — Sobrevivientes (cantidad)")
+# número grande en el centro del donut
+axs[0].text(0, 0, str(surv_male), ha="center", va="center", fontsize=16, fontweight="bold")
+
+# Donut femenino
+vals_f = [surv_female, non_female]
+labels_f = [f"Sobrevivientes ({surv_female})", f"No sobrevivientes ({non_female})"]
+axs[1].pie(
+    vals_f,
+    labels=labels_f,
+    colors=[colors[1], grey],
+    startangle=90,
+    
+)
+axs[1].set_title("Mujeres — Sobrevivientes (cantidad)")
+axs[1].text(0, 0, str(surv_female), ha="center", va="center", fontsize=16, fontweight="bold")
+
+# Asegurar aspecto igual para que los donuts sean circulares
+for ax in axs:
+    ax.axis("equal")
+
+# Mostrar en Streamlit
 st.pyplot(fig)
-
-# ---------------------------------------
-# Mostrar tabla
-# ---------------------------------------
-st.write("## Muestra de datos cargados")
-st.table(df.head())
